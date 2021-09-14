@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - '14.15.5'
+  - '8.0.0'
 dist: trusty
 services:
   - mongodb
@@ -11,7 +11,6 @@ cache:
   directories:
     - node_modules
     - client/node_modules
-    - dfdfdsfds3454fresdfgds
 install:
   - npm install
   - npm run build
