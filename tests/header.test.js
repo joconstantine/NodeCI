@@ -1,12 +1,10 @@
-const sessionFactory = require('./factories/sessionFactory');
-const userFactory = require('./factories/userFactory');
 const Page = require('./helpers/page');
 
 let page;
 
 beforeEach(async () => {
   page = await Page.build();
-  await page.goto('localhost:3000');
+  await page.goto('http://localhost:3000');
 });
 
 afterEach(async () => {
@@ -14,7 +12,7 @@ afterEach(async () => {
 });
 
 test('The header has the corect text', async () => {
-  const text = await page.$eval('a.brand-logo', (el) => el.innerHTML);
+  const text = await page.getContentOf('a.brand-logo');
   expect(text).toEqual('Blogster');
 });
 
@@ -27,15 +25,9 @@ test('Clicking button starts oauth flow', async () => {
 });
 
 test('When signed in, shows logout button', async () => {
-  const user = await userFactory();
-  const { session, sig } = sessionFactory(user);
+  await page.login();
 
-  await page.setCookie({ name: 'session', value: session });
-  await page.setCookie({ name: 'session.sig', value: sig });
-  await page.goto('localhost:3000');
-  await page.waitFor('a[href="/auth/logout"]');
-
-  const text = await page.$eval('a[href="/auth/logout"]', (el) => el.innerHTML);
+  const text = await page.getContentOf('a[href="/auth/logout"]');
 
   expect(text).toEqual('Logout');
 });
