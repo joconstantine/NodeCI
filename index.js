@@ -12,7 +12,6 @@ require('./services/cache');
 mongoose.Promise = global.Promise;
 mongoose.connect(keys.mongoURI, {
   useNewUrlParser: true,
-  useCreateIndex: true,
   useUnifiedTopology: true,
 });
 
