@@ -11,7 +11,7 @@ afterEach(async () => {
   await page.close();
 });
 
-describe('When logged in', () => {
+describe.only('When logged in', () => {
   beforeEach(async () => {
     await page.login();
     await page.click('a.btn-floating');
@@ -37,7 +37,7 @@ describe('When logged in', () => {
 
     test('Submitting then saving adds blog to index page', async () => {
       await page.click('button.green');
-      await page.waitFor('.card');
+      await page.waitForSelector('.card');
 
       const title = await page.getContentOf('.card-title');
       const content = await page.getContentOf('p');
